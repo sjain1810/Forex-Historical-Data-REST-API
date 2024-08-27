@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Sahil Jain
+      changes:
+        - createTable:
+            tableName: forex_data
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: currency_pair
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rate
+                  type: decimal(19, 6)
+                  constraints:
+                    nullable: false
+                    unique: true
+                    check:
+                      condition: rate > 0

@@ -1,0 +1,37 @@
+24-08-27 21:45:27.762 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+24-08-27 21:45:27.858 [main] INFO  c.example.forexData.DemoApplication - Starting DemoApplication using Java 21.0.4 with PID 21528 (C:\Users\jains\Downloads\demo\forex-data\build\classes\java\main started by jains in C:\Users\jains\Downloads\demo\forex-data)
+24-08-27 21:45:27.858 [main] INFO  c.example.forexData.DemoApplication - No active profile set, falling back to 1 default profile: "default"
+24-08-27 21:45:29.112 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-08-27 21:45:29.112 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+24-08-27 21:45:29.159 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.example.forexData.repository.ForexDataRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+24-08-27 21:45:29.159 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 0 JDBC repository interfaces.
+24-08-27 21:45:29.175 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+24-08-27 21:45:29.175 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+24-08-27 21:45:29.206 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 1 JPA repository interface.
+24-08-27 21:45:30.180 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+24-08-27 21:45:30.196 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+24-08-27 21:45:30.196 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+24-08-27 21:45:30.196 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.28]
+24-08-27 21:45:30.305 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+24-08-27 21:45:30.305 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2359 ms
+24-08-27 21:45:30.368 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+24-08-27 21:45:30.808 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+24-08-27 21:45:30.808 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+24-08-27 21:45:30.839 [main] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+24-08-27 21:45:31.237 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+24-08-27 21:45:31.393 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.2.Final
+24-08-27 21:45:31.505 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+24-08-27 21:45:32.025 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+24-08-27 21:45:33.205 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+24-08-27 21:45:33.253 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+24-08-27 21:45:33.979 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+24-08-27 21:45:34.841 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+24-08-27 21:45:34.873 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+24-08-27 21:45:34.911 [main] INFO  c.example.forexData.DemoApplication - Started DemoApplication in 7.7 seconds (process running for 8.197)
+24-08-27 21:45:39.591 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+24-08-27 21:45:39.591 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+24-08-27 21:45:39.607 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 16 ms
+24-08-27 21:45:40.579 [http-nio-8080-exec-4] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 224 ms
+24-08-27 21:45:47.369 [http-nio-8080-exec-6] INFO  c.e.f.controller.ForexController - Received request to scrape and save exchange rates from GBP to INR for period 1W
+24-08-27 21:45:50.829 [http-nio-8080-exec-6] INFO  c.e.f.service.ForexScraperService - Successfully saved 6 records for period 1W
+24-08-27 21:45:50.829 [http-nio-8080-exec-6] INFO  c.e.f.controller.ForexController - Successfully scraped and saved exchange rates for GBP to INR for period 1W

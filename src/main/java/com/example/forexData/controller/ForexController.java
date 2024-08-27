@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "https://forex-historical-data-rest-api-1.onrender.com")
 @RestController
 @RequestMapping("/api/forex-data")
 @Tag(name = "Forex Data Scraping")

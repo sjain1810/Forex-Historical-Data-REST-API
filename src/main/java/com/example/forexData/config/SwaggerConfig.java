@@ -16,6 +16,10 @@ import org.springframework.context.annotation.Configuration;
                 @Server(
                         description = "LOCAL ENV",
                         url = "http://localhost:8080"
+                ),
+                @Server(
+                        description = "Render Deployment",
+                        url = "https://forex-historical-data-rest-api-1.onrender.com"
                 )
         }
 )

@@ -10,8 +10,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOriginPatterns("https://forex-historical-data-rest-api-1.onrender.com/swagger-ui/index.html")
+                .allowedOriginPatterns("https://forex-historical-data-rest-api-1.onrender.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .allowedHeaders("*"); // Ensure this line allows all headers
     }
 }

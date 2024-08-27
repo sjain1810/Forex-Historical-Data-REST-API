@@ -78,7 +78,6 @@ public class ForexController {
                     )
             )
     })
-    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<Object> scrapeAndSaveExchangeRates(
             @RequestParam @Parameter(description = "The currency code representing the source currency to be converted.", example = "GBP") String from,

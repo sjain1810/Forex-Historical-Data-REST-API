@@ -124,6 +124,10 @@ public class ForexController {
         }
     }
 
+    @Operation(
+            summary = "This API is only to access data from the in-memory database",
+            description = "This endpoint retrieves data from the database."
+    )
     @GetMapping("/retrieve") // This API is only to access data from the in-memory database
     public ResponseEntity<Object> getForexData() {
         try {

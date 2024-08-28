@@ -89,17 +89,34 @@ public class ForexController {
 
         try {
             Period periodEnum = Period.fromValue(period);
+
+            if (from.length() != 3 || to.length() != 3 ||
+                    !forexScraperService.isValidCurrencyCode(from) ||
+                    !forexScraperService.isValidCurrencyCode(to)) {
+                String errorMessage = "Invalid input parameters";
+                LOGGER.error("Invalid input parameters: from={}, to={}, period={}", from, to, period);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("msg", errorMessage));
+            }
+
             List<ForexData> forexData = forexScraperService.scrapeAndSaveExchangeRates(from, to, periodEnum);
+
+            if (forexData.isEmpty()) {
+                String errorMessage = "Failed to scrape data";
+                LOGGER.error("Failed to scrape data: No data found for the provided parameters.");
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("msg", errorMessage));
+            }
+
             LOGGER.info("Successfully scraped and saved exchange rates for {} to {} for period {}", from, to, period);
             return ResponseEntity.ok(forexData);
+
         } catch (IllegalArgumentException e) {
-            LOGGER.error("Invalid input parameters: from={}, to={}, period={}", from, to, period, e);
-            Map<String, String> errorResponse = Map.of("msg", "Invalid input parameters: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+            String errorMessage = "Invalid input parameters";
+            LOGGER.error(errorMessage, e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("msg", errorMessage));
         } catch (Exception e) {
-            LOGGER.error("Failed to scrape data: from={}, to={}, period={}", from, to, period, e);
-            Map<String, String> errorResponse = Map.of("msg", "Failed to scrape data: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+            String errorMessage = "Failed to scrape data";
+            LOGGER.error(errorMessage, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("msg", errorMessage));
         }
     }
 }

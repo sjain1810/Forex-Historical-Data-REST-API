@@ -29,19 +29,19 @@ public class ForexScraperService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ForexScraperService.class);
 
-    @Scheduled(cron = "0 20 14 * * *", zone = "Asia/Kolkata") // Daily at IST 02:20 PM
+    @Scheduled(cron = "0 20 14 * * *", zone = "Asia/Kolkata")
     public void scrapeAndSaveWeeklyData() {
         LOGGER.info("Scheduled task: Scraping and saving weekly data for USD to INR");
         scrapeAndSaveExchangeRates("USD", "INR", Period.ONE_WEEK);
     }
 
-    @Scheduled(cron = "0 20 14 * * 6", zone = "Asia/Kolkata") // Every Saturday at IST 02:20 PM
+    @Scheduled(cron = "0 20 14 * * 6", zone = "Asia/Kolkata")
     public void scrapeAndSaveMonthlyData() {
         LOGGER.info("Scheduled task: Scraping and saving monthly data for USD to INR");
         scrapeAndSaveExchangeRates("USD", "INR", Period.ONE_MONTH);
     }
 
-    @Scheduled(cron = "0 20 14 1 * *", zone = "Asia/Kolkata") // Monthly on 1st at IST 02:20 PM
+    @Scheduled(cron = "0 20 14 1 * *", zone = "Asia/Kolkata")
     public void scrapeAndSaveQuarterlyData() {
         LOGGER.info("Scheduled task: Scraping and saving quarterly data for USD to INR");
         scrapeAndSaveExchangeRates("USD", "INR", Period.THREE_MONTHS);
@@ -49,13 +49,14 @@ public class ForexScraperService {
         scrapeAndSaveExchangeRates("USD", "INR", Period.NINE_MONTHS);
     }
 
-    @Scheduled(cron = "0 20 14 1 1 *", zone = "Asia/Kolkata") // January 1st at IST 02:20 PM
+    @Scheduled(cron = "0 20 14 1 1 *", zone = "Asia/Kolkata")
     public void scrapeAndSaveYearlyData() {
         LOGGER.info("Scheduled task: Scraping and saving yearly data for USD to INR");
         scrapeAndSaveExchangeRates("USD", "INR", Period.ONE_YEAR);
     }
 
     public List<ForexData> scrapeAndSaveExchangeRates(String from, String to, Period period) {
+
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = calculateStartDate(period);
 
@@ -121,38 +122,42 @@ public class ForexScraperService {
                 String adjCloseStr = row.select("td:nth-of-type(6)").text();
                 String volumeStr = row.select("td:nth-of-type(7)").text();
 
-                System.out.println("Raw data: " + row.text());
+                LOGGER.debug("Raw data: " + row.text());
 
                 try {
-                    LocalDate date = LocalDate.parse(dateStr, formatter);
-                    if (date.isBefore(startDate) || date.isAfter(endDate)) {
-                        continue;
-                    }
+                    if (!dateStr.isEmpty() && !dateStr.contains("=")) {
+                        LocalDate date = LocalDate.parse(dateStr, formatter);
+                        if (date.isBefore(startDate) || date.isAfter(endDate)) {
+                            continue;
+                        }
 
-                    BigDecimal open = parseBigDecimal(openStr);
-                    BigDecimal high = parseBigDecimal(highStr);
-                    BigDecimal low = parseBigDecimal(lowStr);
-                    BigDecimal close = parseBigDecimal(closeStr);
-                    BigDecimal adjClose = parseBigDecimal(adjCloseStr);
-                    BigDecimal volume = parseBigDecimal(volumeStr);
+                        BigDecimal open = parseBigDecimal(openStr);
+                        BigDecimal high = parseBigDecimal(highStr);
+                        BigDecimal low = parseBigDecimal(lowStr);
+                        BigDecimal close = parseBigDecimal(closeStr);
+                        BigDecimal adjClose = parseBigDecimal(adjCloseStr);
+                        BigDecimal volume = parseBigDecimal(volumeStr);
 
-                    System.out.println("Parsed values: Date: " + date + ", Open: " + open + ", High: " + high + ", Low: " + low + ", Close: " + close + ", AdjClose: " + adjClose + ", Volume: " + volume);
-                    if (open != null && high != null && low != null && close != null && adjClose != null && volume != null) {
-                        ForexData data = new ForexData();
-                        data.setCurrencyPair(currencyPair);
-                        data.setDate(date);
-                        data.setOpen(open);
-                        data.setHigh(high);
-                        data.setLow(low);
-                        data.setClose(close);
-                        data.setAdjClose(adjClose);
-                        data.setVolume(volume);
-                        forexDataList.add(data);
+                        System.out.println("Parsed values: Date: " + date + ", Open: " + open + ", High: " + high + ", Low: " + low + ", Close: " + close + ", AdjClose: " + adjClose + ", Volume: " + volume);
+                        if (open != null && high != null && low != null && close != null && adjClose != null && volume != null) {
+                            ForexData data = new ForexData();
+                            data.setCurrencyPair(currencyPair);
+                            data.setDate(date);
+                            data.setOpen(open);
+                            data.setHigh(high);
+                            data.setLow(low);
+                            data.setClose(close);
+                            data.setAdjClose(adjClose);
+                            data.setVolume(volume);
+                            forexDataList.add(data);
+                        } else {
+                            LOGGER.warn("Skipping row with incomplete or invalid data: {}", row.text());
+                        }
                     } else {
-                        LOGGER.warn("Skipping row with incomplete or invalid data: {}", row.text());
+                        LOGGER.warn("Skipping row with invalid date: {}", dateStr);
                     }
                 } catch (DateTimeParseException e) {
-                    LOGGER.error("Failed to parse date: {}", row.select("td:nth-of-type(1)").text(), e);
+                    LOGGER.error("Failed to parse date: {}", dateStr, e);
                 } catch (NumberFormatException e) {
                     LOGGER.error("Failed to parse numeric values: {}", row.text(), e);
                 }
@@ -175,5 +180,9 @@ public class ForexScraperService {
             LOGGER.error("Failed to parse value to BigDecimal: {}", value, e);
             return BigDecimal.ZERO;
         }
+    }
+
+    public boolean isValidCurrencyCode(String code) {
+        return code != null && code.matches("[A-Z]{3}");
     }
 }

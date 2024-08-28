@@ -54,6 +54,14 @@ This project is a REST API that scrapes historical exchange data from Yahoo Fina
 
 - The server will start running on `http://localhost:8080`.
 
+## Deployment
+
+The service is hosted on Render. You can access the Swagger UI at the following URL:
+
+**Deployment Link:** [https://forex-historical-data-rest-api-1.onrender.com/swagger-ui](https://forex-historical-data-rest-api-1.onrender.com/swagger-ui)
+
+Please note that due to Render's free tier auto-sleep feature, you might experience a brief delay on the first load after periods of inactivity.
+
 ### Database Configuration
 
 The application uses an H2 in-memory database, configured automatically by Spring Boot.
@@ -176,7 +184,7 @@ Description: Scrape and store historical exchange data.
 
 **Responses**:
 
-- `200 OK`: Data scraped and stored successfully.
+- `200 OK`: List of Scrapped Data.
 - `400 Bad Request`: Invalid input parameters.
 - `500 Internal Server Error`: Failed to scrape data.
 
@@ -196,6 +204,32 @@ Description: Scrape and store historical exchange data.
         }
     ]
 
+#### GET /api/forex-data/retrieve
+
+Description: Retrieve the data from the in-memory database.
+
+**Example URL**: `http://localhost:8080/api/forex-data/retrieve`
+
+**Responses**:
+
+- `200 OK`: List of stored Forex data.
+- `500 Internal Server Error`: Failed to retrieve data.
+
+**Example Response**:
+
+    [
+        {
+        "id": 1,
+        "currencyPair": "USDINR=X",
+        "date": "2024-08-26",
+        "open": 82.50,
+        "high": 83.00,
+        "low": 81.75,
+        "close": 82.90,
+        "adjClose": 82.90,
+        "volume": 1000000
+        }
+    ]
 
 ## CRON Jobs
 

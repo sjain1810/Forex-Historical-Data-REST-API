@@ -124,8 +124,13 @@ public class ForexController {
         }
     }
 
-    @GetMapping("getForex")
-    public ResponseEntity<List<ForexData>> getForexData(){
-        return ResponseEntity.ok(forexDataRepository.findAll());
+    @GetMapping("/retrieve") // This api is only to access data from the in-memory database
+    public ResponseEntity<List<ForexData>> getForexData() {
+        try {
+            List<ForexData> forexData = forexDataRepository.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(forexData);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving forex data");
+        }
     }
 }

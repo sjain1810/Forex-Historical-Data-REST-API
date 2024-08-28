@@ -38,7 +38,7 @@ This project is a REST API that scrapes historical exchange data from Yahoo Fina
 
     ```bash
     git clone https://github.com/sjain1810/Forex-Historical-Data-REST-API.git
-    cd forex-data-api
+    cd forex-data
     ```
 
 2. **Build and run the application:**

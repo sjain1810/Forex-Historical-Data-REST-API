@@ -1,6 +1,7 @@
 package com.example.forexData.controller;
 
 import com.example.forexData.model.ForexData;
+import com.example.forexData.repository.ForexDataRepository;
 import com.example.forexData.service.ForexScraperService;
 import com.example.forexData.util.Period;
 import org.slf4j.Logger;
@@ -28,6 +29,9 @@ public class ForexController {
 
     @Autowired
     private ForexScraperService forexScraperService;
+
+    @Autowired
+    private ForexDataRepository forexDataRepository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ForexController.class);
 
@@ -118,5 +122,10 @@ public class ForexController {
             LOGGER.error(errorMessage, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("msg", errorMessage));
         }
+    }
+
+    @GetMapping("getForex")
+    public ResponseEntity<List<ForexData>> getForexData(){
+        return ResponseEntity.ok(forexDataRepository.findAll());
     }
 }
